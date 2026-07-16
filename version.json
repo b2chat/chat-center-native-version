@@ -1,5 +1,11 @@
 {
   "schemaVersion": 1,
-  "ios":     { "buildNumber": 0, "updatedAt": "2026-07-16T00:00:00Z" },
-  "android": { "buildNumber": 0, "updatedAt": "2026-07-16T00:00:00Z" }
+  "ios": {
+    "buildNumber": 0,
+    "updatedAt": "2026-07-16T00:00:00Z"
+  },
+  "android": {
+    "buildNumber": 2,
+    "updatedAt": "2026-07-16T22:12:17Z"
+  }
 }
