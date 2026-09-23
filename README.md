@@ -11,7 +11,7 @@ what to do: nothing, suggest a store update (a dismissable dialog), or block the
 
 | File                   | Read by                                   | Who changes it                                                                      |
 | ---------------------- | ----------------------------------------- | ----------------------------------------------------------------------------------- |
-| `version.json`         | **production** builds (store customers)   | The `Publish app version` workflow in `chat-center-native` opens a PR here; merging it is the publication. Inputs: the platform, the build live in the store (checked against EAS), and what to do with `minBuildNumber` — `none`, `same-as-build`, `custom` or `remove` |
+| `version.json`         | **production** builds (store customers)   | The `Publish app version` workflow in `chat-center-native` opens a PR here as the `b2chat-release-bot` GitHub App; merging it (one approval) is the publication. The form asks what older builds should see — *Update dialog*, *Update wall*, *Block builds below a custom number* or *Remove the wall* — and the new version's build number (checked against EAS) |
 | `version.preview.json` | **preview** builds (QA, `io.b2chat.appm.dev`) | By hand — the QA rehearsal knob. Never affects a store build.                   |
 
 A build type whose file does not exist (development) gets a 404 and does nothing.
@@ -45,9 +45,10 @@ Numbers are compared numerically against the installed binary's build number
 - **Set `minBuildNumber` only for builds that can no longer receive OTA updates** (their native
   fingerprint is no longer the one on `main`) and only after the replacement has been live long
   enough for auto-updates to have done most of the work.
-- **Rollback:** `Publish app version` with `minimum: remove` drops `minBuildNumber` (it does not
-  need EAS); every walled app comes back on its next launch, no reinstall. `minimum: custom` lowers
-  it instead. Prefer the workflow over a hand edit: its PR shows both keys before and after.
+- **Rollback:** `Publish app version` with *Remove the wall (rollback)* drops `minBuildNumber`
+  (it does not need EAS); every walled app comes back on its next launch, no reinstall. *Block
+  builds below a custom number* lowers it instead. Prefer the workflow over a hand edit: its PR
+  shows both keys before and after.
 - Any failure to fetch or parse a file is silent: the app behaves as if the file said nothing.
 - The app reads the GitHub contents API first (uncached, so a merge is visible on the next launch
   or foreground) and falls back to raw GitHub, which is CDN-cached for about 5 minutes — a
