@@ -11,7 +11,7 @@ what to do: nothing, suggest a store update (a dismissable dialog), or block the
 
 | File                   | Read by                                   | Who changes it                                                                      |
 | ---------------------- | ----------------------------------------- | ----------------------------------------------------------------------------------- |
-| `version.json`         | **production** builds (store customers)   | The `Publish app version` workflow in `chat-center-native`. It reads what each store has live for every user and opens a PR here as the `b2chat-release-bot` GitHub App; merging it (one approval) is the publication. Form: platform (*both*, *android*, *ios*) and action — *Status*, *New version: optional update*, *New version: required update*, *Rollback: unblock everyone* |
+| `version.json`         | **production** builds (store customers)   | The `Update notices` workflow in `chat-center-native`. It reads what each store has live for every user and opens a PR here as the `b2chat-release-bot` GitHub App; merging it (one approval) is the publication. Form: platform (*both*, *android*, *ios*) and action — *Status*, *New version: optional update*, *New version: required update*, *Rollback: unblock everyone* |
 | `version.preview.json` | **preview** builds (QA, `io.b2chat.appm.dev`) | By hand — the QA rehearsal knob. Never affects a store build.                   |
 
 A build type whose file does not exist (development) gets a 404 and does nothing.
@@ -45,7 +45,7 @@ Numbers are compared numerically against the installed binary's build number
 - **Set `minBuildNumber` only for builds that can no longer receive OTA updates** (their native
   fingerprint is no longer the one on `main`) and only after the replacement has been live long
   enough for auto-updates to have done most of the work.
-- **Rollback:** `Publish app version` with *Rollback: unblock everyone* drops `minBuildNumber` (it
+- **Rollback:** `Update notices` with *Rollback: unblock everyone* drops `minBuildNumber` (it
   works even when a store cannot be read); every walled app comes back on its next launch, no
   reinstall. Prefer the workflow over a hand edit: its PR shows each key before and after.
 - Any failure to fetch or parse a file is silent: the app behaves as if the file said nothing.
